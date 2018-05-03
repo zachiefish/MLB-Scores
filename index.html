@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap Darkly Theme -->
+    <link rel="stylesheet" href="css/darkly.bootstrap.min.css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+
+    <title>MLB Scores</title>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <!-- Page header -->
+      <div class="row">
+        <span class="mx-auto m-5">
+          <img src="img/MLB-Logo.svg" onerror="this.src='MLB-Logo.png'" class="mlb-logo mr-3">
+          <h1 class="display-4 d-inline align-middle">MLB Scores</h1>
+        </span>
+      </div>
+      <div class="row">
+        <div class="col"></div>
+
+        <!-- Middle column -->
+        <div class="col">
+
+          <!-- Favourite team -->
+          <div class="d-flex justify-content-between my-2">
+              <span class="my-auto">Favourite Team:</span>
+              <select class="form-control" id="fav-team" style="width: max-content;">
+                <optgroup label="National League">
+                  <optgroup label="East">
+                      <option value="Braves">Atlanta Braves</option>
+                      <option value="Marlins">Miami Marlins</option>
+                      <option value="Mets">New York Mets</option>
+                      <option value="Phillies">Philadelphia Phillies</option>
+                      <option value="Nationals">Washington Nationals</option>
+                  </optgroup>
+                  <optgroup label="Central">
+                      <option value="Cubs">Chicago Cubs</option>
+                      <option value="Reds">Cincinnati Reds</option>
+                      <option value="Brewers">Milwaukee Brewers</option>
+                      <option value="Pirates">Pittsburgh Pirates</option>
+                      <option value="Cardinals">St. Louis Cardinals</option>
+                  </optgroup>
+                  <optgroup label="West">
+                      <option value="Diamondbacks">Arizona Diamondbacks</option>
+                      <option value="Rockies">Colorado Rockies</option>
+                      <option value="Dodgers">Los Angeles Dodgers</option>
+                      <option value="Padres">San Diego Padres</option>
+                      <option value="Giants">San Francisco Giants</option>
+                  </optgroup>
+                </optgroup>
+                <optgroup label="American League">
+                  <optgroup label="East">
+                      <option value="Orioles">Baltimore Orioles</option>
+                      <option value="Red Sox">Boston Red Sox</option>
+                      <option value="Yankees">New York Yankees</option>
+                      <option value="Rays">Tampa Bay Rays</option>
+                      <option  value="Blue Jays" selected="selected">Toronto Blue Jays</option>
+                  </optgroup>
+                  <optgroup label="Central">
+                      <option value="White Sox">Chicago White Sox</option>
+                      <option value="Indians">Cleveland Indians</option>
+                      <option value="Tigers">Detroit Tigers</option>
+                      <option value="Royals">Kansas City Royals</option>
+                      <option value="Twins">Minnesota Twins</option>
+                  </optgroup>
+                  <optgroup label="West">
+                      <option value="Astros">Houston Astros</option>
+                      <option value="Angels">Los Angeles Angels</option>
+                      <option value="Athletics">Oakland Athletics</option>
+                      <option value="Mariners">Seattle Mariners</option>
+                      <option value="Rangers">Texas Rangers</option>
+                  </optgroup>
+                </optgroup>
+              </select>
+          </div>
+          
+          <!-- Games section -->
+          <div class="card">
+
+            <!-- Date picker -->
+            <div class="card-header text-center">
+              <div class="btn-group">
+                <button class="btn btn-secondary" id="date-back">&larr;</button>
+                <!-- Display date -->
+                <input type="text" class="form-control" id="display-date">
+                <!-- Actual date (yyyy-mm-dd) -->
+                <input type="hidden" id="date">
+                <button class="btn btn-secondary" id="date-forward">&rarr;</button>
+              </div>
+            </div>
+
+            <!-- Game list -->
+            <ul class="list-group list-group-flush" id="game-list">
+            </ul>
+
+            <!-- Loading bar -->
+            <div class="loading-bar progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+            </div>
+
+            <!-- Invisible game template for populating the games -->
+            <li class="game-card list-group-item d-none" id="game-template">
+
+              <!-- Away team row -->
+              <div class="row">
+                <div class="col-9">
+                  <span class="float-left">
+                    <img class="team-logo away-logo d-none">
+                    <h5 class="team-name away-name d-inline align-middle"></h5>
+                  </span>
+                </div>
+                <div class="col-3"><h5 class="away-runs float-right"></h5></div>
+              </div>
+
+              <!-- Home team row -->
+              <div class="row">
+                <div class="col-9">
+                  <span class="float-left">
+                    <img class="team-logo home-logo d-none">
+                    <h5 class="team-name home-name d-inline align-middle"></h5>
+                  </span>
+                </div>
+                <div class="col-3"><h5 class="home-runs float-right"></h5></div>
+              </div>
+
+              <!-- Game status -->
+              <span class="status badge badge-primary float-right"></span>
+
+              <!-- Game details template -->
+              <div class="game-details collapse">
+                <!-- Linescore -->
+                <table class="linescore table table-sm"></table>
+
+                <!-- Loading bar -->
+                <div class="loading-bar progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                </div>
+
+                <!-- Hidden element for storing game_data_directory until it's needed -->
+                <input type="hidden" class='game-data-directory'>
+
+                <!-- Tabs to select table -->
+                <div class="player-tables">
+                  <ul class="nav nav-tabs nav-fill" role="tablist">
+                    <li class="nav-item">
+                      <a class="away-nav nav-link active" data-toggle="tab" role="tab" href="#away-table"><strong></strong></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="home-nav nav-link" data-toggle="tab" role="tab" href="#home-table"><strong></strong></a>
+                    </li>
+                  </ul>
+
+                  <!-- Batting & Pitching tables -->
+                  <div class="tab-content">
+                    <div class="away-tab tab-pane fade show active" role="tabpanel" id="away-table">
+                      <table class="away-batting table table-sm"></table>
+                      <table class="away-pitching table table-sm"></table>
+                    </div>
+                    <div class="home-tab tab-pane fade" role="tabpanel" id="home-table">
+                      <table class="home-batting table table-sm"></table>
+                      <table class="home-pitching table table-sm"></table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+
+        <div class="col"></div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="jquery-ui/jquery-ui.min.js"></script>
+    <!-- Popper.js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Date helper -->
+    <script src="js/date.js"></script>
+    <!-- MLB API helper -->
+    <script src="js/api.js"></script>
+    <!-- Custom JS -->
+    <script src="js/custom.js"></script>
+  </body>
+</html>

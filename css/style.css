@@ -1,0 +1,28 @@
+.col {
+    padding: 0;
+}
+
+.mlb-logo {
+    height: 4rem;
+}
+
+/* Apply white drop shadow to logos for increased visibility */
+.team-logo {
+    height: 2rem;
+    margin-left: -0.5rem;
+    margin-right: 0.5rem;
+    -webkit-filter: drop-shadow(0.5px 0.5px 0 white)
+                    drop-shadow(-0.5px -0.5px 0 white);
+    filter: drop-shadow(0.5px 0.5px 0 white) 
+            drop-shadow(-0.5px -0.5px 0 white);
+}
+
+.team-name {
+    margin-left: 2.25rem;
+}
+
+/* Darken the game card when hovering over it */
+.clickable:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.25);
+}
