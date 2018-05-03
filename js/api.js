@@ -34,7 +34,7 @@ function populate() {
     var date = getSelectedDate(); // Get the selected date
 
     // Format the URL according to the given date
-    var requestURL = 'http://gd2.mlb.com/components/game/mlb/year_' + date.year + '/month_' + date.month + '/day_' + date.day + '/master_scoreboard.json';
+    var requestURL = 'https://gd2.mlb.com/components/game/mlb/year_' + date.year + '/month_' + date.month + '/day_' + date.day + '/master_scoreboard.json';
 
     $.getJSON(requestURL, function(games) {
         games = games['data']['games']['game'];
@@ -194,7 +194,7 @@ function populatePlayers(gameDetails) {
     gameDetails.find('.loading-bar').removeClass('d-none'); // Make loading bar visible while everything loads
     
     // Get boxscore.json
-    var requestURL = 'http://gd2.mlb.com' + gameDataDirectory + '/boxscore.json';
+    var requestURL = 'https://gd2.mlb.com' + gameDataDirectory + '/boxscore.json';
     $.getJSON(requestURL, function(boxscore) {
         boxscore = boxscore['data']['boxscore'];
 
