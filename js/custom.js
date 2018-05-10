@@ -12,6 +12,9 @@ $(document).ready(function() {
             changeYear: true
         }).datepicker('setDate', new Date());
 
+        // Enable all tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+
         populate(); // Populates the page with data from today's games
     })
 
