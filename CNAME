@@ -1,1 +1,4 @@
 www.mlbfavscores.com
+type = CNAME
+name = www
+value = zachiefish.github.io
